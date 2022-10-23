@@ -82,6 +82,43 @@ add = [a b] => {
   ret a + b
 }
 ```
+
+All functions are injected with their surrounding scope upon creation, which means closures are also possible.
+
+Example - Closures:
+
+```
+outer = [] => {
+  x = 12
+  inner = [] => {
+    ret x
+  }
+  ret inner
+}
+
+f = outer[]
+f[]   // result: 12
+```
+
+Functions are also injected with a pointer to themselves, which makes recursion possible.
+
+Example - Recursion:
+
+```
+fib = [n] => {
+
+	if [n == 0] => {
+		ret 0
+	}
+  if [n <= 2] => {
+     ret 1
+  }
+
+  ret fib[n-1] + fib[n-2]
+  
+}
+```
+
 ### Calling functions
 
 There are multiple ways functions can be called in Glide. The first one is the simple bracket notation:
@@ -174,5 +211,88 @@ while [x <= 10] => {
 
 While loops take a single conditional and loops until that conditional stops being met.
 
-## If Statements
+## If Statements and If Blocks
+
+In Glide, you can write one off if statements, or if blocks which act as an if/else if(s)/else statement.
+
+Example - If Statement:
+
+```
+if [x != 3] => {
+  x = 3
+}
+```
+
+Example - If block:
+
+```
+if => {
+  x < 3: {
+    x = 0
+  }
+  x > 3: {
+    x = 10
+  }
+  default: {
+    x = 100
+  }
+}
+```
+
+## Lists
+
+Lists can contain any type of element. They can be constructed using the range (..) operator, as seen in previous examples, or by explicitly building them. Notice that in Glide, list items are not comma separated. 
+
+List items can be accessed by index using the dot-bracket notation.
+
+Example - Lists:
+
+```
+x = [ 1 2 3 "hello" "goodbye" ]
+x.[3]   // result: "hello"
+x.[0] = 100   // result: [ 100 2 3 "hello" "goodbye" ]
+```
+
+We can also add lists together:
+
+```
+x = [1 2 3] + [4 5 6]   // result: [1 2 3 4 5 6]
+```
+
+### List built-in properties:
+
+length: ``` x.length ```: retrieves the length of the list
+
+## Objects
+
+Objects are containers consisting of key/value pairs.
+
+Example - Objects:
+
+```
+obj = @{
+  first: "James"
+  last: "Smith"
+  get_name: [] => {
+    ret first + " " + last
+  }
+  
+obj.last          // returns: "Smith"
+obj.get_name[]    // returns "James Smith"
+```
+
+An interesting feature of Glide objects is that properties can access any previously defined property in the object (as per the get_name function above).
+
+Objects can also be added together, which merges the right object's properties with the left's. If the left and right object share the same property, that property is replaced with the right's.
+
+Example - Adding objects:
+
+```
+x = 
+  @{ name: "Irene" score: 12 } 
+  + 
+  @{ name: "Irene" score: 29 grade: "B" }
+  
+// returns @{ name: "Irene" score: 29 grade: "B" }
+```
 
