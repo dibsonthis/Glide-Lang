@@ -369,3 +369,6 @@ Glide is written in C++. The compiler produces bytecode (kind of, it's not reall
 
 Glide is very much a work in progress, with many _many_ bugs that are being identified and fixed daily. This is not intended to be a language used in any production environment (yet), and can be classed as a toy language until all issues are ironed out.
 
+**_So, where's the source code?_**
+
+It's in another private repo, currently it has a lot of things I want to refactor and clean up, and the plan is to eventually make it open source.
