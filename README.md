@@ -1,6 +1,8 @@
 # Glide
 Documentation for the Glide programming language.
 
+Link to video demo: [Glide reddit post](https://www.reddit.com/r/ProgrammingLanguages/comments/ybjtax/glide_data_transformation_language_documentation/)
+
 ## Preface
 
 The name 'Glide' (previously 'Flow') is not set and can change at any time. The programming language in this documentation will be referenced as Glide for the time being.
