@@ -276,6 +276,7 @@ obj = @{
   get_name: [] => {
     ret first + " " + last
   }
+}
   
 obj.last          // returns: "Smith"
 obj.get_name[]    // returns "James Smith"
