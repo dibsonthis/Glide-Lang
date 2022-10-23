@@ -107,9 +107,9 @@ Example - Recursion:
 ```
 fib = [n] => {
 
-	if [n == 0] => {
-		ret 0
-	}
+   if [n == 0] => {
+     ret 0
+  }
   if [n <= 2] => {
      ret 1
   }
