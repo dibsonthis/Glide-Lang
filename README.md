@@ -296,3 +296,75 @@ x =
 // returns @{ name: "Irene" score: 29 grade: "B" }
 ```
 
+## Chaining
+
+As touched upon previously, Glide's entire reason for existing is to be able to easily read and write data transformation. In the context of Glide, this is called chaining. 
+
+Example - Chaining:
+
+```
+x =
+(10, 20) -> add
+-> +2
+-> add12
+-> mul4
+-> some_function
+-> *12
+-> (y =)
+-> [x] => { ret x * (3+2) }
+```
+
+Some interesting points on the above:
+
+- You can inject directly into a lambda, which makes chaining a really powerful way to transform data without too much pre-meditation.
+- You can assign variables directly inside a chain (y =), which can act as a way of "saving state" in the middle of a transformation.
+- You can inject multiple values into a function/operator using a comma-separated list, as shown in the first line of the transformation.
+
+## Standard Lib
+
+As it stands currently, the standard lib has some useful functionality primed at data transformation.
+
+### Map
+
+_map_ creates a copy of the list provided and applies the given function/operator to each element:
+
+```
+1..100 -> std.map[*2]
+1..100 -> std.map[([x] => { ret x * 2 })]
+```
+
+### Filter
+
+_filter_ filters the provided list based on the given condition: 
+
+```
+1..100 -> std.filter[>10] -> std.filter[<20]
+1..100 -> std.filter[([x] => { ret x < 20 && x > 10 })]
+```
+
+### Reduce
+
+_reduce_ reduces the provided list based on the given function/operation:
+
+```
+1..100 -> std.reduce[+]
+1..100 -> std.reduce[([a b] => { ret a + b })]
+```
+
+### Zip
+
+_zip_ takes two lists and applies the given function to each element of the same index:
+
+```
+(1..100, 1..100) -> std.zip[+]
+(1..100, 1..100) -> std.zip[([a b] => { ret a + b })]
+```
+
+## Implementation
+
+Glide is written in C++. The compiler produces bytecode (kind of, it's not really a byte) instructions that are evaluated using a virtual machine also built in C++. As it currently stands, the performance is not exactly optimal and work is being done to improve it on this front.
+
+## Closing note
+
+Glide is very much a work in progress, with many _many_ bugs that are being identified and fixed daily. This is not intended to be a language used in any production environment (yet), and can be classed as a toy language until all issues are ironed out.
+
